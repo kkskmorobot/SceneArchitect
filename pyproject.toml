@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scenearchitect"
+version = "0.1.0"
+description = "Controllable SDXL anime landscape and architecture generation toolkit"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "SceneArchitect contributors" }]
+dependencies = [
+  "PyYAML>=6.0.2,<7",
+  "packaging>=24.2,<26",
+]
+
+[project.optional-dependencies]
+train = [
+  "accelerate>=1.2,<2",
+  "datasets>=3.2,<5",
+  "diffusers>=0.32,<1",
+  "peft>=0.14,<1",
+  "safetensors>=0.4.5,<1",
+  "tensorboard>=2.18,<3",
+  "transformers>=4.48,<6",
+  "bitsandbytes>=0.45,<1; platform_system != 'Windows'",
+]
+inference = [
+  "accelerate>=1.2,<2",
+  "diffusers>=0.32,<1",
+  "peft>=0.14,<1",
+  "safetensors>=0.4.5,<1",
+  "transformers>=4.48,<6",
+]
+data = [
+  "numpy>=1.26,<3",
+  "opencv-python-headless>=4.10,<5",
+  "pillow>=10.4,<13",
+  "tqdm>=4.67,<5",
+]
+ui = ["gradio>=5.12,<7"]
+eval = [
+  "numpy>=1.26,<3",
+  "open-clip-torch>=2.30,<4",
+  "pandas>=2.2,<4",
+  "torchmetrics>=1.6,<2",
+]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+scene-architect = "scenearchitect.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+

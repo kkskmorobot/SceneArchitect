@@ -1,0 +1,24 @@
+schema_version: 1
+
+project:
+  name: SceneArchitect
+  package: scenearchitect
+  root: ${SCENEARCHITECT_ROOT:-.}
+  seed: 42
+
+paths:
+  raw_data: data/raw
+  interim_data: data/interim
+  processed_data: data/processed
+  models: models
+  outputs: outputs
+  logs: logs
+
+runtime:
+  device: cuda
+  mixed_precision: bf16
+  attention_backend: sdpa
+  enable_xformers: false
+  allow_tf32: true
+  deterministic: false
+

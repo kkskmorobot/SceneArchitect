@@ -1,0 +1,173 @@
+schema_version: 1
+
+input:
+  train_metadata: data/processed_v2/metadata/train.jsonl
+  validation_metadata: data/processed_v2/metadata/val.jsonl
+
+output:
+  train_metadata: data/processed_v2/metadata/architecture_train.jsonl
+  validation_metadata: data/processed_v2/metadata/architecture_val.jsonl
+  audit_metadata: data/processed_v2/metadata/architecture_caption_audit.jsonl
+  report: data/processed_v2/metadata/architecture_curation_report.json
+
+selection:
+  mode: scene
+  minimum_scene_tags: 2
+  keep_no_humans: true
+  blocked_tags: &blocked_tags
+    - explicit
+    - questionable
+    - nsfw
+    - nude
+    - naked
+    - completely nude
+    - nipples
+    - areolae
+    - pussy
+    - penis
+    - anus
+    - sex
+    - cum
+    - masturbation
+    - spread legs
+    - panties
+    - bra
+    - lingerie
+    - bikini
+    - swimsuit
+    - cleavage
+    - large breasts
+    - underboob
+    - sideboob
+    - loli
+    - shota
+    - child
+    - young girl
+    - young boy
+  scene_terms: &scene_terms
+    - scenery
+    - landscape
+    - architecture
+    - building
+    - city
+    - cityscape
+    - urban
+    - street
+    - road
+    - alley
+    - bridge
+    - railway
+    - train station
+    - industrial
+    - factory
+    - machinery
+    - tower
+    - house
+    - room
+    - indoors
+    - outdoors
+    - interior
+    - window
+    - stairs
+    - railing
+    - power lines
+    - utility pole
+    - sign
+    - forest
+    - tree
+    - grass
+    - flower
+    - mountain
+    - hill
+    - field
+    - desert
+    - ruins
+    - castle
+    - temple
+    - shrine
+    - courtyard
+    - ocean
+    - sea
+    - water
+    - river
+    - lake
+    - coast
+    - sky
+    - cloud
+    - horizon
+    - sunlight
+    - shadow
+    - night
+    - sunset
+    - sunrise
+    - fog
+    - rain
+    - snow
+  composition_tags:
+    - wide shot
+    - very wide shot
+    - panorama
+    - panoramic
+    - aerial view
+    - bird's-eye view
+    - from above
+    - from below
+    - fisheye
+    - perspective
+    - vanishing point
+  person_focus_tags:
+    - close-up
+    - portrait
+    - upper body
+    - cowboy shot
+    - face focus
+    - solo focus
+
+caption:
+  prefix_tags: [anime scenery, detailed background]
+  person_scale_tag: distant human figure
+  max_tags: 50
+  drop_exact:
+    - solo
+    - multiple girls
+    - multiple boys
+    - artist name
+    - signature
+    - watermark
+    - username
+    - logo
+    - dated
+    - commentary
+    - looking at viewer
+    - standing
+    - sitting
+    - lying
+    - kneeling
+    - walking
+    - running
+    - holding
+    - hand up
+    - full body
+    - smile
+    - blush
+    - expressionless
+    - closed mouth
+    - open mouth
+    - barefoot
+    - bow
+    - backpack
+    - bag
+    - sleeping
+    - sleeping upright
+    - sitting on stairs
+    - looking at screen
+  drop_patterns:
+    - '^(?:\d+|multiple)\s*(?:girls?|boys?|women?|men?)$'
+    - '(?:^|\s)hair(?:$|\s)'
+    - '(?:^|\s)(?:eyes?|breasts?|cleavage|navel|thighs?|legs?|arms?|hands?|feet|toes|mouth|lips)(?:$|\s)'
+    - '(?:shirt|dress|skirt|gloves?|footwear|shoes?|boots?|sleeves?|pants|shorts|jacket|coat|uniform|swimsuit|hat|ribbon|thighhighs|socks?|stockings|bra|panties)'
+    - '(?:hair ornament|hairband|hair bow|animal ears|jewelry|necklace|earrings?|bracelet)'
+    - '(?:^|\s)(?:shoulders?|waist|hips?|knees?|head|face|forehead|chest)(?:$|\s)'
+    - '(?:scarves?|scarf|bows?|jewels?|backpacks?|bags?)'
+    - '(?:^|\s)(?:(?:english|japanese|chinese)\s+)?text(?:$|\s)'
+

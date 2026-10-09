@@ -1,0 +1,22 @@
+schema_version: 1
+
+presets:
+  japanese_street:
+    prefix: anime background art, quiet Japanese street, coherent architecture, wide composition
+    suffix: detailed environment, atmospheric perspective, cinematic light
+  rainy_neon:
+    prefix: anime cityscape, rainy night, neon reflections, futuristic architecture
+    suffix: volumetric light, wet pavement, detailed environment
+  forest_shrine:
+    prefix: anime landscape, ancient forest shrine, mossy stone path
+    suffix: morning mist, soft god rays, tranquil atmosphere
+  seaside_town:
+    prefix: anime seaside town, white buildings, blue ocean, summer sky
+    suffix: clean perspective, bright natural light, detailed background
+  ancient_courtyard:
+    prefix: anime architectural concept art, traditional Chinese courtyard
+    suffix: balanced composition, carved wood details, warm dusk light
+  future_metropolis:
+    prefix: anime futuristic metropolis, monumental architecture, layered transit
+    suffix: cinematic scale, atmospheric haze, intricate city details
+

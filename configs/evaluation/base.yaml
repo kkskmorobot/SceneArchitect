@@ -1,0 +1,26 @@
+schema_version: 1
+
+inputs:
+  manifest: outputs/evaluation/manifest.jsonl
+
+metrics:
+  clip_score:
+    enabled: true
+    model_name: ViT-H-14
+    pretrained: laion2b_s32b_b79k
+  edge_consistency:
+    enabled: true
+    canny_low: 100
+    canny_high: 200
+  depth_consistency:
+    enabled: false
+    model_id: null
+  aesthetic_score:
+    enabled: false
+    model_id: null
+
+output:
+  directory: outputs/evaluation
+  per_sample_csv: metrics.csv
+  summary_json: summary.json
+

@@ -1,0 +1,40 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.idea/
+.vscode/
+.pytest_tmp*/
+.env
+/.webui_secret_key
+__pycache__/
+*.egg-info/
+
+# Local datasets, model weights, caches, and generated artifacts.
+data/raw/*
+data/interim/*
+data/processed/*
+data/processed_v2/*
+data/anime_background/
+models/*
+outputs/*
+logs/*
+BuShu/output/*
+BuShu/patch_backup_*/
+
+# Keep directory contracts in Git.
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+!outputs/.gitkeep
+!logs/.gitkeep
+!BuShu/output/.gitkeep
+
+# Training checkpoints are large and machine-specific.
+checkpoint-step-*/
+.checkpoint-*.tmp/
+wandb/
+runs/

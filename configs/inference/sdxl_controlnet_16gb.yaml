@@ -1,0 +1,152 @@
+schema_version: 1
+
+models:
+  sdxl:
+    label: Stable Diffusion XL 1.0
+    base_model: models/stable-diffusion-xl-base-1.0
+    revision: main
+    variant: fp16
+    local_files_only: true
+    scheduler: dpmpp_2m_karras
+    prompt_suffix: ''
+    default_steps: 30
+    default_guidance: 6.5
+    adapters:
+      v1:
+        candidates:
+          - outputs/training/architecture_style_v001/final
+        default_weight: 0.85
+        prompt_prefix: anime scenery, detailed background
+      v2_character:
+        candidates:
+          - outputs/training/character_style_v002/final
+        default_weight: 0.8
+        prompt_prefix: anime character illustration, detailed character design
+      v2_architecture:
+        candidates:
+          - outputs/training/architecture_style_v002/final
+        default_weight: 0.7
+        prompt_prefix: anime scenery, detailed background
+  animagine:
+    label: Animagine XL 4.0
+    base_model: models/animagine-xl-4.0
+    revision: main
+    variant: null
+    local_files_only: true
+    scheduler: euler_a
+    prompt_suffix: safe, masterpiece, high score, great score, absurdres
+    default_steps: 28
+    default_guidance: 5.0
+    adapters:
+      v3_architecture:
+        candidates:
+          - outputs/training/animagine_architecture_style_v001/final
+        default_weight: 0.85
+        prompt_prefix: anime scenery, detailed background
+      v3_character:
+        candidates:
+          - outputs/training/animagine_character_style_v001/final
+        default_weight: 0.8
+        prompt_prefix: anime character illustration, detailed character design
+
+profiles:
+  v1:
+    label: v1
+    model: sdxl
+    adapter: v1
+    default_weight: 0.85
+  v2_character:
+    label: v2-人物
+    model: sdxl
+    adapter: v2_character
+    default_weight: 0.8
+  v2_architecture:
+    label: v2-建筑
+    model: sdxl
+    adapter: v2_architecture
+    default_weight: 0.7
+  v3_character:
+    label: v3-人物
+    model: animagine
+    adapter: v3_character
+    default_weight: 0.8
+  v3_architecture:
+    label: v3-建筑
+    model: animagine
+    adapter: v3_architecture
+    default_weight: 0.85
+
+controlnets:
+  canny:
+    enabled: true
+    model_id: models/controlnet-canny-sdxl-1.0-small
+    variant: fp16
+    default_scale: 0.75
+  depth:
+    enabled: true
+    model_id: models/controlnet-depth-sdxl-1.0-small
+    variant: fp16
+    default_scale: 0.65
+  canny-full:
+    enabled: true
+    model_id: models/controlnet-canny-sdxl-1.0
+    variant: fp16
+    default_scale: 0.75
+  lineart:
+    enabled: false
+    model_id: null  # Stage C/E: set only after SDXL compatibility and license are verified.
+    default_scale: 0.7
+  seg:
+    enabled: false
+    model_id: null
+    default_scale: 0.7
+  max_simultaneous: 2
+
+generation:
+  width: 1024
+  height: 1024
+  num_inference_steps: 30
+  guidance_scale: 6.5
+  num_images_per_prompt: 1
+  seed: 42
+  scheduler: dpmpp_2m_karras
+  negative_prompt: >-
+    low quality, worst quality, blurry, low resolution, distorted perspective,
+    malformed architecture, duplicated objects, text, watermark, logo
+
+memory:
+  dtype: bf16
+  attention_backend: sdpa
+  enable_xformers: false
+  model_cpu_offload: true
+  sequential_cpu_offload: false
+  vae_slicing: true
+  vae_tiling: true
+
+refine:
+  enabled: false
+  mode: img2img
+  scale_factor: 1.5
+  strength: 0.25
+  num_inference_steps: 20
+
+output:
+  directory: BuShu/output
+  image_format: png
+  save_json_sidecar: true
+  embed_png_metadata: true
+
+presets:
+  自定义: ''
+  森林神社: anime scenery, forest shrine, morning mist, detailed architecture, wide shot
+  日式街道: anime scenery, quiet japanese street, warm sunset, detailed background, wide shot
+  未来都市: anime scenery, futuristic city, monumental architecture, atmospheric perspective
+  海边小镇: anime scenery, coastal town, ocean, afternoon sunlight, detailed background
+  动漫人物: anime character illustration, young adult, detailed face, expressive eyes, cinematic lighting
+
+ui:
+  title: SceneArchitect 本地图像生成平台
+  host: 127.0.0.1
+  port: 7860
+  share: false
+  max_queue: 8

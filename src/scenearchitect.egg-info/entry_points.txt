@@ -1,0 +1,2 @@
+[console_scripts]
+scene-architect = scenearchitect.cli:main

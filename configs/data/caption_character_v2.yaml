@@ -1,0 +1,66 @@
+schema_version: 1
+
+input:
+  train_metadata: data/processed_v2/metadata/train.jsonl
+  validation_metadata: data/processed_v2/metadata/val.jsonl
+
+output:
+  train_metadata: data/processed_v2/metadata/character_train.jsonl
+  validation_metadata: data/processed_v2/metadata/character_val.jsonl
+  audit_metadata: data/processed_v2/metadata/character_caption_audit.jsonl
+  report: data/processed_v2/metadata/character_curation_report.json
+
+selection:
+  mode: character
+  blocked_tags:
+    - explicit
+    - questionable
+    - nsfw
+    - nude
+    - naked
+    - completely nude
+    - nipples
+    - areolae
+    - pussy
+    - penis
+    - anus
+    - sex
+    - cum
+    - masturbation
+    - spread legs
+    - panties
+    - bra
+    - lingerie
+    - bikini
+    - swimsuit
+    - cleavage
+    - large breasts
+    - underboob
+    - sideboob
+    - loli
+    - shota
+    - child
+    - young girl
+    - young boy
+  scene_terms: []
+  composition_tags: []
+  person_focus_tags: []
+
+caption:
+  prefix_tags: [anime character illustration, detailed character design]
+  person_scale_tag: ''
+  max_tags: 50
+  drop_exact:
+    - artist name
+    - signature
+    - watermark
+    - username
+    - logo
+    - dated
+    - commentary
+    - english text
+    - japanese text
+    - chinese text
+  drop_patterns:
+    - '(?:^|\s)(?:(?:english|japanese|chinese)\s+)?text(?:$|\s)'
+

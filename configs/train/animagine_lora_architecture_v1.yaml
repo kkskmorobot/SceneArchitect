@@ -1,0 +1,75 @@
+schema_version: 1
+
+run:
+  name: animagine_architecture_style_v001
+  target: architecture_style
+  output_dir: outputs/training/animagine_architecture_style_v001
+  seed: 242
+
+model:
+  pretrained_model_name_or_path: models/animagine-xl-4.0
+  revision: main
+  variant: null
+  train_text_encoders: false
+
+data:
+  train_metadata: data/processed_v2/metadata/architecture_train.jsonl
+  validation_metadata: data/processed_v2/metadata/architecture_val.jsonl
+  resolution: 768
+  center_crop: false
+  random_flip: true
+  aspect_ratio_bucketing: true
+  bucket_step: 64
+  min_bucket_side: 512
+  max_bucket_side: 1024
+  max_bucket_pixels: 589824
+  dataloader_num_workers: 4
+
+lora:
+  rank: 16
+  alpha: 16
+  dropout: 0.0
+  target_modules: [to_q, to_k, to_v, to_out.0]
+
+training:
+  max_train_steps: 3000
+  train_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 0.0001
+  lr_scheduler: cosine
+  lr_warmup_steps: 300
+  optimizer: adamw
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_weight_decay: 0.01
+  adam_epsilon: 0.00000001
+  max_grad_norm: 1.0
+  mixed_precision: bf16
+  gradient_checkpointing: true
+  allow_tf32: true
+  attention_backend: sdpa
+  cache_latents: false
+  snr_gamma: 5.0
+
+checkpointing:
+  every_n_steps: 100
+  keep_last: 3
+  resume_from: latest
+  auto_resume_if_available: true
+  strict_config_match: true
+  save_on_interrupt: true
+  save_on_exception: true
+
+validation:
+  every_n_steps: 500
+  num_images_per_prompt: 1
+  num_inference_steps: 28
+  guidance_scale: 5.0
+  prompts:
+    - anime scenery, forest shrine, morning mist, detailed architecture, wide shot, safe, masterpiece, high score, great score, absurdres
+    - anime city street, modern buildings, sunset light, detailed background, wide shot, safe, masterpiece, high score, great score, absurdres
+
+logging:
+  level: INFO
+  report_to: tensorboard
+  log_every_n_steps: 10

@@ -1,0 +1,59 @@
+schema_version: 1
+
+input:
+  images_dir: data/anime_background
+  recursive: true
+  extensions: [.jpg, .jpeg, .png, .webp, .bmp]
+  min_width: 512
+  min_height: 512
+  max_megapixels: 40
+  reject_animated: true
+
+output:
+  root: data/processed_v2
+  image_format: jpg
+  jpeg_quality: 95
+  overwrite: false
+
+caption:
+  strategy: sidecar
+  sidecar_extension: .txt
+  fallback_prefix: anime scene
+  blip_model: Salesforce/blip-image-captioning-base
+  device: auto
+
+labels:
+  scene_types: [landscape, architecture, street, city, forest, mountain, coast, courtyard]
+  architecture_styles: [japanese, modern, traditional_chinese, cyberpunk, futuristic]
+  weather: [clear, cloudy, rain, snow, fog]
+  time_of_day: [dawn, day, sunset, night]
+  camera: [wide_shot, aerial, eye_level, low_angle]
+
+controls:
+  canny:
+    enabled: true
+    low_threshold: 100
+    high_threshold: 200
+  lineart:
+    enabled: true
+    blur_radius: 1.2
+  depth:
+    enabled: false
+    model: depth-anything/Depth-Anything-V2-Small-hf
+    device: auto
+  segmentation:
+    enabled: false
+    model: nvidia/segformer-b0-finetuned-ade-512-512
+    device: auto
+
+bucketing:
+  step: 64
+  min_side: 512
+  max_side: 1024
+  max_pixels: 589824
+
+split:
+  validation_fraction: 0.1
+  seed: 42
+  minimum_validation_items: 1
+
